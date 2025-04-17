@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { addComment, getComments } from './actions'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Home() {
   const [text, setText] = useState('')
@@ -36,30 +39,30 @@ export default function Home() {
       <h1 className="text-2xl font-bold mb-4">Comments</h1>
       
       <form onSubmit={handleSubmit} className="mb-8">
-        <textarea
+        <Textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="w-full p-2 border rounded mb-2"
           rows={4}
           placeholder="Enter your comment..."
+          className="mb-2"
         />
-        <button
-          type="submit"
-          disabled={loading}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={loading}>
           {loading ? 'Adding...' : 'Add Comment'}
-        </button>
+        </Button>
       </form>
 
       <div className="space-y-4">
         {comments.map((comment) => (
-          <div key={comment.id} className="p-4 border rounded">
-            <p className="text-gray-700">{comment.text}</p>
-            <p className="text-sm text-gray-500 mt-2">
-              {new Date(comment.createdAt).toLocaleString()}
-            </p>
-          </div>
+          <Card key={comment.id}>
+            <CardHeader>
+              <CardTitle className="text-sm text-gray-500">
+                {new Date(comment.createdAt).toLocaleString()}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700">{comment.text}</p>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </main>

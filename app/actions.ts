@@ -4,10 +4,7 @@ import { dynamoDB } from '@/lib/dynamodb'
 import { PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb'
 import { ulid } from 'ulid'
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-
 export async function addComment(text: string) {
-  await delay(2000) // 2 second delay
   const id = ulid()
   await dynamoDB.send(
     new PutCommand({
