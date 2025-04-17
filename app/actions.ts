@@ -19,11 +19,17 @@ export async function addComment(text: string) {
   return id
 }
 
-export async function getComments() {
+export async function getComments(lastKey?: string, limit: number = 3) {
   const result = await dynamoDB.send(
     new ScanCommand({
-      TableName: 'comments'
+      TableName: 'comments',
+      Limit: limit,
+      ...(lastKey ? { ExclusiveStartKey: { id: lastKey } } : {}),
     })
   )
-  return result.Items || []
+  
+  return {
+    items: result.Items || [],
+    lastEvaluatedKey: result.LastEvaluatedKey?.id
+  }
 } 

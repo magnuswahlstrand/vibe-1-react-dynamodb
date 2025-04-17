@@ -10,13 +10,30 @@ export default function Home() {
   const [text, setText] = useState('')
   const [comments, setComments] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [lastKey, setLastKey] = useState<string | undefined>()
+  const [hasMore, setHasMore] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
+
+  const loadComments = async (reset = false) => {
+    if (reset) {
+      setLoadingMore(true)
+      const result = await getComments()
+      setComments(result.items)
+      setLastKey(result.lastEvaluatedKey)
+      setHasMore(!!result.lastEvaluatedKey)
+      setLoadingMore(false)
+    } else {
+      setLoadingMore(true)
+      const result = await getComments(lastKey)
+      setComments(prev => [...prev, ...result.items])
+      setLastKey(result.lastEvaluatedKey)
+      setHasMore(!!result.lastEvaluatedKey)
+      setLoadingMore(false)
+    }
+  }
 
   useEffect(() => {
-    const loadComments = async () => {
-      const loadedComments = await getComments()
-      setComments(loadedComments)
-    }
-    loadComments()
+    loadComments(true)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,9 +42,13 @@ export default function Home() {
     
     setLoading(true)
     try {
-      await addComment(text)
-      const updatedComments = await getComments()
-      setComments(updatedComments)
+      const id = await addComment(text)
+      const newComment = {
+        id,
+        text,
+        createdAt: new Date().toISOString()
+      }
+      setComments(prev => [newComment, ...prev])
       setText('')
     } finally {
       setLoading(false)
@@ -64,6 +85,18 @@ export default function Home() {
             </CardContent>
           </Card>
         ))}
+        
+        {hasMore && (
+          <div className="mt-4 text-center">
+            <Button 
+              variant="outline" 
+              onClick={() => loadComments()} 
+              disabled={loadingMore}
+            >
+              {loadingMore ? 'Loading...' : 'Load More'}
+            </Button>
+          </div>
+        )}
       </div>
     </main>
   )
