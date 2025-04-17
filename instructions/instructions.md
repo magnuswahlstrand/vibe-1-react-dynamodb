@@ -6,7 +6,7 @@ A web app with a Node.js backend, React frontend, and DynamoDB (ElectronDB) for 
 ## Tech Stack:
 * Frontend: React (Next.js), Shadcn, Lucide icons
 * Backend: Next.js
-* Data Store: DynamoDB (ElectronDB)
+* Data Store: DynamoDB (ElectroDB)
 * pnpm for package management
 * Server actions for requests
 
@@ -42,7 +42,7 @@ A web app with a Node.js backend, React frontend, and DynamoDB (ElectronDB) for 
 
 ## Let's start with a simple data model. PK a ULID and then attributes, a single attribute text which contains a text
 
-Initial phase
+## Initial phase
 1. A list of all entries in dynamodb DB
 2. A textarea 
 3. Button
