@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useRouter } from 'next/navigation';
+import MenuButton from './MenuButton';
 
 interface MenuItem {
   id: string;
@@ -44,23 +44,21 @@ export default function MainMenu() {
   return (
     <Card className="w-full max-w-md">
       <CardContent className="pt-6">
-        <h1 className="text-2xl font-bold mb-8 text-center">QR Code Game</h1>
-        <div className="flex flex-col gap-2">
+        <h1 className="text-4xl font-bold mb-12 text-center">Code Scanner</h1>
+        <div className="flex flex-col gap-4">
           {menuItems.map((item, index) => (
-            <Button
+            <MenuButton
               key={item.id}
-              variant={index === selectedIndex ? "default" : "outline"}
-              className="w-full"
+              label={item.label}
+              isSelected={index === selectedIndex}
               onClick={() => {
                 setSelectedIndex(index);
                 handleSelect();
               }}
-            >
-              {item.label}
-            </Button>
+            />
           ))}
         </div>
-        <div className="mt-8 text-sm text-muted-foreground text-center">
+        <div className="mt-12 text-lg text-muted-foreground text-center font-medium">
           Scan QR codes to navigate (w: up, s: down, enter: select)
         </div>
       </CardContent>

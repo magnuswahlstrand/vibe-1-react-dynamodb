@@ -1,23 +1,37 @@
 export interface GameItem {
+  id: string;
   title: string;
   description: string;
   imageUrl: string;
 }
 
-export const QR_CODE_MAPPINGS: Record<string, GameItem> = {
-  'r': {
+export const GAME_ITEMS: Record<string, GameItem> = {
+  'small': {
+    id: 'small',
     title: 'Small Cat',
     description: 'A tiny kitten',
     imageUrl: 'https://picsum.photos/id/237/200/300',
   },
-  't': {
+  'medium': {
+    id: 'medium',
     title: 'Medium Cat',
     description: 'A growing kitten',
     imageUrl: 'https://picsum.photos/id/238/200/300',
   },
-  'y': {
+  'large': {
+    id: 'large',
     title: 'Large Cat',
     description: 'A full-grown cat',
     imageUrl: 'https://picsum.photos/id/239/200/300',
   }
-}; 
+};
+
+// Maps QR codes to item IDs
+export const QR_CODE_MAPPINGS: Record<string, string> = {
+  'r': 'small',
+  't': 'medium',
+  'y': 'large'
+};
+
+// Defines the correct order of items
+export const CORRECT_ORDER: string[] = ['small', 'medium', 'large'];
