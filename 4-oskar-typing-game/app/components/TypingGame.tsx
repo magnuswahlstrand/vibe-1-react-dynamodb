@@ -3,15 +3,20 @@
 import { useState, useEffect, useRef } from 'react';
 import { Howl } from 'howler';
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 
 const Confetti = dynamic(() => import('react-confetti'), { ssr: false });
 
-const words = ['oskar', 'mamma', 'pappa'];
+const defaultWords = ['oskar', 'mamma', 'pappa'];
 const correctSound = new Howl({ src: ['/sounds/correct.mp3'] });
 const incorrectSound = new Howl({ src: ['/sounds/incorrect.aiff'] });
 const completeSound = new Howl({ src: ['/sounds/applause.wav'] });
 
 export default function TypingGame() {
+  const searchParams = useSearchParams();
+  const urlWords = searchParams.get('words')?.split(',').map(w => w.trim().toLowerCase()) || [];
+  const words = urlWords.length > 0 ? urlWords : defaultWords;
+  
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [typedLetters, setTypedLetters] = useState<string[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -29,6 +34,7 @@ export default function TypingGame() {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key.toLowerCase();
+    if (!currentWord || typedLetters.length >= currentWord.length) return;
     const currentLetter = currentWord[typedLetters.length].toLowerCase();
 
     if (key === currentLetter) {
@@ -43,8 +49,10 @@ export default function TypingGame() {
           if (currentWordIndex + 1 === words.length) {
             setShowStarConfetti(true);
             setTimeout(() => setShowStarConfetti(false), 5000);
+            setCurrentWordIndex(0);
+          } else {
+            setCurrentWordIndex(currentWordIndex + 1);
           }
-          setCurrentWordIndex(currentWordIndex + 1);
           setTypedLetters([]);
         }, 2000);
       }
@@ -68,7 +76,7 @@ export default function TypingGame() {
                 : 'text-gray-800'
             }`}
           >
-            {letter}
+            {letter.toUpperCase()}
           </span>
         ))}
       </div>
