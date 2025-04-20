@@ -24,7 +24,6 @@ export default function TypingGame() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const currentWord = words[currentWordIndex];
-  const isWordComplete = typedLetters.length === currentWord.length;
 
   useEffect(() => {
     if (inputRef.current) {
