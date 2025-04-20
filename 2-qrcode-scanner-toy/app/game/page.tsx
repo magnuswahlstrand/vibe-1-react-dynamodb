@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation';
-import { GameItem, QR_CODE_MAPPINGS, GAME_ITEMS, CORRECT_ORDER } from '../types/game';
+import { GameItem, QR_CODE_MAPPINGS, GAME_ITEMS, CORRECT_ORDER, GAME_COMMANDS } from '../types/game';
 import Image from 'next/image';
 import { CheckCircle2, XCircle, HelpCircle } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 export default function GamePage() {
   const router = useRouter();
@@ -20,9 +21,30 @@ export default function GamePage() {
     return JSON.stringify(itemIds) === JSON.stringify(CORRECT_ORDER);
   };
 
+  const triggerConfetti = () => {
+    confetti({
+      particleCount: 200,
+      spread: 190,
+      startVelocity: 30,
+      origin: { y: 0.6 }
+    });
+  };
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
+      
+      // Check for commands first
+      if (key in GAME_COMMANDS) {
+        if (key === 'r') {
+          setScannedItems([]);
+        } else if (key === 'm') {
+          router.push('/');
+        }
+        return;
+      }
+
+      // Then check for item scans
       if (key in QR_CODE_MAPPINGS) {
         const itemId = QR_CODE_MAPPINGS[key];
         const item = GAME_ITEMS[itemId];
@@ -39,10 +61,16 @@ export default function GamePage() {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
+  }, [router]);
 
   const isOrderCorrect = checkOrder(scannedItems);
   const allItemsScanned = scannedItems.length === CORRECT_ORDER.length;
+
+  useEffect(() => {
+    if (isOrderCorrect) {
+      triggerConfetti();
+    }
+  }, [isOrderCorrect]);
 
   const StatusIcon = () => {
     if (!allItemsScanned) {

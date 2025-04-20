@@ -28,9 +28,19 @@ export const GAME_ITEMS: Record<string, GameItem> = {
 
 // Maps QR codes to item IDs
 export const QR_CODE_MAPPINGS: Record<string, string> = {
-  'r': 'small',
-  't': 'medium',
-  'y': 'large'
+  'y': 'small',
+  'u': 'medium',
+  'i': 'large'
+};
+
+// Command mappings for the game page
+export const GAME_COMMANDS: Record<string, () => void> = {
+  'r': () => {
+    // Reset game - handled in the component
+  },
+  'm': () => {
+    // Go to menu - handled in the component
+  }
 };
 
 // Defines the correct order of items
