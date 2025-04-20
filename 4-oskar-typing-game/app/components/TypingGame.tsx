@@ -8,9 +8,9 @@ import { useSearchParams } from 'next/navigation';
 const Confetti = dynamic(() => import('react-confetti'), { ssr: false });
 
 const defaultWords = ['oskar', 'mamma', 'pappa'];
-const correctSound = new Howl({ src: ['/sounds/correct.mp3'] });
-const incorrectSound = new Howl({ src: ['/sounds/incorrect.aiff'] });
-const completeSound = new Howl({ src: ['/sounds/applause.wav'] });
+const correctSound = new Howl({ src: [`${process.env.NEXT_PUBLIC_BASE_PATH}/sounds/correct.mp3`] });
+const incorrectSound = new Howl({ src: [`${process.env.NEXT_PUBLIC_BASE_PATH}/sounds/incorrect.aiff`] });
+const completeSound = new Howl({ src: [`${process.env.NEXT_PUBLIC_BASE_PATH}/sounds/applause.wav`] });
 
 export default function TypingGame() {
   const searchParams = useSearchParams();
