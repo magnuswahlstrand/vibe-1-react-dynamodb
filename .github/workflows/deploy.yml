@@ -39,7 +39,7 @@ jobs:
         working-directory: 4-oskar-typing-game
         run: pnpm build
         env:
-          NEXT_PUBLIC_BASE_PATH: '/4-oskar-typing-game'
+          NEXT_PUBLIC_BASE_PATH: '/vibe-projects'
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
