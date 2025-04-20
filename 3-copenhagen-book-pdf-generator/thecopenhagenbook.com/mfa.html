@@ -1,0 +1,435 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/mfa by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>Multi-factor authentication (MFA)</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="Multi-factor authentication (MFA)" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="Multi-factor authentication (MFA)" />
+  <meta property="og:url" content="mfa.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="javascript.css" />
+  
+  <link rel="stylesheet" href="json.css" />
+  
+  <link rel="stylesheet" href="main.css" />
+  
+  <link rel="stylesheet" href="markdown.css" />
+  
+  <link rel="stylesheet" href="typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="sessions.html" class="nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="random-values.html" class="nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="oauth.html" class="nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="mfa.html" class="current-nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="sessions.html" class="nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="random-values.html" class="nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="oauth.html" class="nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="mfa.html" class="current-nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="multi-factor-authentication-mfa">Multi-factor authentication (MFA)</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#time-based-one-time-passwords-totp">Time-based one-time passwords (TOTP)</a>
+<ul>
+<li><a href="#generate-qr-code">Generate QR code</a></li>
+<li><a href="#validate-otps">Validate OTPs</a></li>
+</ul>
+</li>
+<li><a href="#sms">SMS</a></li>
+<li><a href="#webauthn">WebAuthn</a></li>
+<li><a href="#recovery-codes">Recovery codes</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>MFA is when a user is required to input more than just a password to authenticate. There are mainly 5 types of factors:</p>
+<ul>
+<li>Something you know: Passwords</li>
+<li>Something you have: Device, email address, SMS</li>
+<li>Something you are: Biometrics</li>
+<li>Somewhere you are</li>
+<li>Something you do</li>
+</ul>
+<h2 id="time-based-one-time-passwords-totp">Time-based one-time passwords (TOTP)</h2>
+<p>TOTP is defined in <a href="https://datatracker.ietf.org/doc/html/rfc6238">RFC 6238</a>, which is based on hash-based one-time passwords (HOTP), defined in <a href="https://www.ietf.org/rfc/rfc4226.txt">RFC 4226</a>.</p>
+<p>Standard TOTP uses an authenticator app, usually installed on the user's mobile device, to generate a code for the user.</p>
+<p>Each user has a secret key. This is shared with the user's authenticator app with a QR code. Using that secret and the current time, the authenticator app can generate a new OTP. Your app asks for the current OTP and it can validate it by generating one using the same parameters. Since the current time is used to generate the code, each code is only valid for a set period (usually 30 seconds).</p>
+<h3 id="generate-qr-code">Generate QR code</h3>
+<p>HMAC SHA-1 is used to generate TOTPs. The secret key is exactly 160 bits and it must be generated using a cryptographically-secure random generator. Each user must have its own secret and the secret should be stored in your server. The secret can be encrypted before storage if you're worried about accidentally leaking your database records. It's important to remember that encrypting data won't protect against attackers who have system-level access to your servers however.</p>
+<p>To share the secret, generate a <a href="https://github.com/google/google-authenticator/wiki/Key-Uri-Format">key URI</a> and encode it into a QR code. The <code>secret</code> is base32 encoded.</p>
+<p>You should verify that the user has correctly scanned the QR code by asking for the generated OTP.</p>
+<pre class="codeblock"><code>otpauth://totp/example%20app:John%20Doe?secret=JBSWY3DPEHPK3PXP&amp;issuer=Example%20App&amp;digits=6&amp;period=30
+</code></pre><p>When a user requests for a new QR code, generate a new secret and invalidate the previous one.</p>
+<h3 id="validate-otps">Validate OTPs</h3>
+<p>To validate a TOTP, we need to generate one first.</p>
+<p>HOTPs are generated by signing a counter value with HMAC. In HOTP, the counter is an integer that is incremented whenever a new code is generated. But in TOTP, the counter is the current UNIX time divided by the interval (usually 30 seconds) with the fractional part truncated.</p>
+<p>The counter, which should be 8 bytes, is hashed with HMAC SHA-1. 4 bytes are extracted using an offset. Then the last 31 bits is extracted and converted into an integer. Finally, the last 6 digit is used as the OTP.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/hmac&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/sha1&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;encoding/binary&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;math&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateTOTP</span><span class="p">(</span><span class="nx">secret</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">digits</span> <span class="o">:=</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">counter</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">Unix</span><span class="p">()</span> <span class="o">/</span> <span class="mi">30</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// HOTP
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">mac</span> <span class="o">:=</span> <span class="nx">hmac</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">sha1</span><span class="p">.</span><span class="nx">New</span><span class="p">,</span> <span class="nx">secret</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">buf</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nf">PutUint64</span><span class="p">(</span><span class="nx">buf</span><span class="p">,</span> <span class="nb">uint64</span><span class="p">(</span><span class="nx">counter</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">mac</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">HS</span> <span class="o">:=</span> <span class="nx">mac</span><span class="p">.</span><span class="nf">Sum</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">offset</span> <span class="o">:=</span> <span class="nx">HS</span><span class="p">[</span><span class="mi">19</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x0f</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Snum</span> <span class="o">:=</span> <span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nf">Uint32</span><span class="p">(</span><span class="nx">HS</span><span class="p">[</span><span class="nx">offset</span><span class="p">:</span><span class="nx">offset</span><span class="o">+</span><span class="mi">4</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mh">0x7fffffff</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">D</span> <span class="o">:=</span> <span class="nx">Snum</span> <span class="o">%</span> <span class="nb">uint32</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">digits</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Pad &#34;0&#34; to make it 6 digits.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%06d&#34;</span><span class="p">,</span> <span class="nx">D</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><p>To validate an OTP, you can simply generate one on your end and check if it matches with what the user provided.</p>
+<p>Throttling must be implemented. A basic example is blocking attempts for 15 to 60 minutes after the 5th consecutive failed attempt. The user should also be notified to change the password as well.</p>
+<h2 id="sms">SMS</h2>
+<p>We discourage SMS based MFA as it can be intercepted and unreliable at times. However, it may be more accessible than using authenticator apps. See the <a href="email-verification.html#email-verification-codes">Email verification code</a> guide for a guideline on implementing verification codes. The code should be valid for around 5 minutes.</p>
+<p>Throttling must be implemented. A basic example is blocking attempts for 15 to 60 minutes after the 5th consecutive failed attempt. The user should also be notified to change the password as well.</p>
+<h2 id="webauthn">WebAuthn</h2>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API">Web Authentication API (WebAuthn)</a> allows applications to use user devices for authentication using public key cryptography. You can either verify the user's identity with the devices PIN code or biometrics, or just verify the device. Both works as a second factor and the latter can be more user-friendly as users aren't prompted for their password/fingerprint.</p>
+<p>See the <a href="webauthn.html">WebAuthn</a> guide for implementations.</p>
+<h2 id="recovery-codes">Recovery codes</h2>
+<p>If your application uses MFA, we recommend issuing users with 1 or more recovery codes. These are single-use passwords that can be used instead of passkeys/OTPs to sign in and reset their second-factor when a user loses access to their devices. The codes must be generated using a cryptographically-secure random generator. They can be generated with only 40 bits of entropy (10 characters when encoded with hex) assuming proper throttling is implemented.</p>
+<p>Unless you can securely store these codes, we recommend hashing them with your preferred password hashing algorithm (e.g. Argon2id). In this case, the codes are only visible the first time the user registers their second-factor. User should also be given the option to regenerate them if they have access to their second-factor.</p>
+</main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/mfa by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>

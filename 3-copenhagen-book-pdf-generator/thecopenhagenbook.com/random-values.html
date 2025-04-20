@@ -1,0 +1,494 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/random-values by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>Generating random values</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="Generating random values" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="Generating random values" />
+  <meta property="og:url" content="random-values.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="javascript.css" />
+  
+  <link rel="stylesheet" href="json.css" />
+  
+  <link rel="stylesheet" href="main.css" />
+  
+  <link rel="stylesheet" href="markdown.css" />
+  
+  <link rel="stylesheet" href="typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="sessions.html" class="nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="random-values.html" class="current-nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="oauth.html" class="nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="sessions.html" class="nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="random-values.html" class="current-nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="oauth.html" class="nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="generating-random-values">Generating random values</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#random-strings">Random strings</a>
+<ul>
+<li><a href="#custom-character-set">Custom character set</a></li>
+</ul>
+</li>
+<li><a href="#random-integers">Random integers</a></li>
+<li><a href="#random-floating-point-numbers-between-0-and-1">Random floating-point numbers between 0 and 1</a></li>
+<li><a href="#biases">Biases</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>Pseudo-random generators often provided by the standard math package are fast but predictable. When dealing with cryptography, having access to a strong random generator is essential.</p>
+<p>This page describes how to generate random strings and numbers from randomly generated bits.</p>
+<h2 id="random-strings">Random strings</h2>
+<p>The easiest and safest way to generate random strings is to generate random bytes and encode them with base16 (hex), base32, or base64 encoding schemes.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;encoding/base32&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomString</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">base32</span><span class="p">.</span><span class="nx">StdEncoding</span><span class="p">.</span><span class="nf">EncodeToString</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><h3 id="custom-character-set">Custom character set</h3>
+<p>If the character set length fits with an existing encoding scheme (e.g. base64), you can customize the characters used.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;encoding/base32&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">customEncoding</span> <span class="p">=</span> <span class="nx">base32</span><span class="p">.</span><span class="nf">NewEncoding</span><span class="p">(</span><span class="s">&#34;0123456789ABCDEFGHJKMNPQRSTVWXYZ&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomString</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">customEncoding</span><span class="p">.</span><span class="nf">EncodeToString</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><p>If not, you would need a high-quality <a href="#random-integers">random number generator</a> to generate an integer within a custom range.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kd">const</span> <span class="nx">alphabet</span> <span class="p">=</span> <span class="s">&#34;abcdefg&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomString</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">result</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">12</span><span class="p">;</span> <span class="nx">i</span> <span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">result</span> <span class="o">+=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">alphabet</span><span class="p">[</span><span class="nf">generateRandomInt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">alphabet</span><span class="p">))])</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><h2 id="random-integers">Random integers</h2>
+<p>If the range is a power of 2 (2, 4, 8, 16 etc), a simple bit masking will do the trick.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">value</span> <span class="o">:=</span> <span class="nx">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x03</span> <span class="c1">// random value between [0, 3]
+</span></span></span></code class=%s></pre><p>For a custom range, a simple approach is to generate a very large random number compared to the maximum and use the modulo operator. Since this introduces <a href="#biases">a modulo bias</a>, the random integer must be sufficiently large. For example, if the maximum was 10 and we generated 32 random bits, the bias would be around 1/250,000,000 - which can be good enough for most use cases.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;encoding/binary&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Generates a random integer between [0, max).
+</span></span></span><span class="line"><span class="cl"><span class="c1">// `max` should not be a very large number.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">generateRandomUint32</span><span class="p">(</span><span class="nx">max</span> <span class="kt">uint32</span><span class="p">):</span> <span class="kt">uint32</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">max</span> <span class="kt">uint32</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">randUint32</span> <span class="o">:=</span> <span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nf">Uint32</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span> <span class="c1">// Convert bytes to uint32
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">randUint32</span> <span class="o">%</span> <span class="nx">max</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><p>Another common approach is to multiply our maximum with a random float. This can also <a href="#biases">introduce a bias</a> but it can be fine if the maximum is small enough and, unlike our first approach, the bias is spread out.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomUint32</span><span class="p">(</span><span class="nx">max</span> <span class="kt">uint32</span><span class="p">):</span> <span class="kt">uint32</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">max</span> <span class="kt">uint32</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nb">uint32</span><span class="p">(</span><span class="nx">max</span> <span class="o">*</span> <span class="nf">generateRandomFloat32</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><p>The safest approach then is to use rejection sampling, where a random value is repeatedly generated until it's under the maximum. To increase the likelihood the random value is under the maximum, we can only generate the maximum number of bits required to represent the maximum. For example, if the maximum is 10, we would only have to generate 4 bits. In the code below, we're generating a random byte and then masking the 4 leading bits to get 4 random bits (8-4=4).</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;math/big&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomUint64</span><span class="p">(</span><span class="nx">max</span> <span class="o">*</span><span class="nx">big</span><span class="p">.</span><span class="nx">Int</span><span class="p">)</span> <span class="kt">uint64</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">randVal</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">big</span><span class="p">.</span><span class="nx">Int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">shift</span> <span class="o">:=</span> <span class="nx">max</span><span class="p">.</span><span class="nf">BitLen</span><span class="p">()</span> <span class="o">%</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="p">(</span><span class="nx">max</span><span class="p">.</span><span class="nf">BitLen</span><span class="p">()</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">shift</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nx">shift</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">randVal</span><span class="p">.</span><span class="nf">SetBytes</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">randVal</span><span class="p">.</span><span class="nf">Cmp</span><span class="p">(</span><span class="nx">max</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">shift</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nx">shift</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">randVal</span><span class="p">.</span><span class="nf">SetBytes</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">randVal</span><span class="p">.</span><span class="nf">Uint64</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><h3 id="random-floating-point-numbers-between-0-and-1">Random floating-point numbers between 0 and 1</h3>
+<p>A common approach is to generate a random integer and divide it by a very big number. When doing this, it is crucial that the denominator is large enough, and that the denominator is a power of 2 to be accurately represented by float64.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomFloat64</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nb">float64</span><span class="p">(</span><span class="nf">generateRandomInteger</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">53</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">53</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><p>Another approach is to generate 52 random bits for the mantissa (float64) and convert that into a float within [0, 1). This will be generally faster since it avoids division.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;math&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateRandomFloat64</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nx">bytes</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// set exponent part to 0b01111111111
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="mh">0x3f</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">|=</span> <span class="mh">0xf0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">math</span><span class="p">.</span><span class="nf">Float64frombits</span><span class="p">(</span><span class="nx">binary</span><span class="p">.</span><span class="nx">BigEndian</span><span class="p">.</span><span class="nf">Uint64</span><span class="p">(</span><span class="nx">bytes</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><h2 id="biases">Biases</h2>
+<p>A very common bias seen in the wild is the modulo bias. For example, if <code>RANDOM_INT</code> is an integer in [0, 10), some numbers will appear 3 times (0, 1) while others will appear 2 times (2, 3).</p>
+<pre class="codeblock"><code>RANDOM_INT % 4
+</code></pre><p>To calculate the approximate bias, we can use the formula below.</p>
+<pre class="codeblock"><code>1 / ( RANDOM_BITS - LOG2(MAX) )
+</code></pre><p>For example, if we use 8 random bits and the maximum is 100, the approximate bias would be 0.6:</p>
+<pre class="codeblock"><code>1 / ( 8 - LOG2(100) ) ≈ 1 / (8-6.4) ≈ 0.6
+</code></pre><p>Multiplying the maximum with a random floating point number can introduce bias as well. In this example, <code>RANDOM_FLOAT</code> is within [0, 1) so the output will be [0, 5).</p>
+<pre class="codeblock"><code>FLOOR( RANDOM_FLOAT * 5 )
+</code></pre><p>Let's say <code>RANDOM_FLOAT</code> can be one of 8 numbers: 0, 0.125, 0.25, ..., 0.875. In this case, (0, 1, 3) will appear 1/4 times while (2, 4) will only appear 1/8 times. While this is an extreme example, it is essential that the random float provides enough &quot;randomness&quot; compared to the maximum.</p>
+</main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/random-values by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>

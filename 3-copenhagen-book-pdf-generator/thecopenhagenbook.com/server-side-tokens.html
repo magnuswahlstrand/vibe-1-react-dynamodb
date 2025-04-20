@@ -1,0 +1,399 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/server-side-tokens by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>Server-side tokens</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="Server-side tokens" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="Server-side tokens" />
+  <meta property="og:url" content="server-side-tokens.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="javascript.css" />
+  
+  <link rel="stylesheet" href="json.css" />
+  
+  <link rel="stylesheet" href="main.css" />
+  
+  <link rel="stylesheet" href="markdown.css" />
+  
+  <link rel="stylesheet" href="typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="server-side-tokens.html" class="current-nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="sessions.html" class="nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="random-values.html" class="nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="oauth.html" class="nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="server-side-tokens.html" class="current-nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="sessions.html" class="nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="random-values.html" class="nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="oauth.html" class="nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="server-side-tokens">Server-side tokens</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#generating-tokens">Generating tokens</a></li>
+<li><a href="#storing-tokens">Storing tokens</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>A &quot;server-side token&quot; is any long, random string that is stored on the server. It may be persisted in a database or in-memory data store (e.g. Redis) and is used for authentication and verification. A token can be validated by checking if it exists in storage. Examples include session IDs, email verification tokens, and access tokens.</p>
+<pre class="codeblock"><code>CREATE TABLE token (
+	token STRING NOT NULL UNIQUE,
+	expires_at INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
+
+	FOREIGN KEY (user_id) REFERENCES user(id)
+)
+</code></pre><p>For single-use tokens, any retrieval should also guarantee deletion. In SQL for example, an atomic operation such as a transaction should be used when fetching a token.</p>
+<h2 id="generating-tokens">Generating tokens</h2>
+<p>Tokens should have at least 112 bits of entropy (120-256 is a good range). For example, you could generate 15 random bytes and encode it with base32 to get a 24-character token. If you generate tokens by choosing random characters one by one, you should ensure a similar level of entropy. See the <a href="random-values.html">Generating random values</a> page for more information.</p>
+<p>Tokens must be generated using a cryptographically secure random generator. Fast, pseudo-random generators like those generally provided by standard math packages should be avoided for this.</p>
+<p>Tokens should be case-sensitive, but you may want to constrain your token generation to lowercase letters if your storage is case-insensitive (e.g. MySQL).</p>
+<blockquote>
+<p>For a 120 bit token, it would take someone 2 quintillion years before they guess a valid token if they generate 10,000 tokens per second and there are 1,000,000 valid tokens in the system.</p>
+</blockquote>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;encoding/base32&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">bytes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">rand</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sessionId</span> <span class="o">:=</span> <span class="nx">base32</span><span class="p">.</span><span class="nx">StdEncoding</span><span class="p">.</span><span class="nf">EncodeToString</span><span class="p">(</span><span class="nx">bytes</span><span class="p">)</span>
+</span></span></code class=%s></pre><p>UUID v4 may fit these requirements (122 bits of entropy), but keep in mind that UUID v4 is space inefficient and the spec does not guarantee the use of a cryptographically secure random generator.</p>
+<h2 id="storing-tokens">Storing tokens</h2>
+<p>Tokens that require an extra level of security, such as password reset tokens, should be hashed with SHA-256. SHA-256 can be used instead of a slower algorithm here as the token is sufficiently long and random. Tokens can be validated by hashing the incoming token before querying.</p>
+<p>Real-life examples of accidental leaks include <a href="https://www.vpnmentor.com/blog/report-paleohacks-breach/">Paleohacks</a> and <a href="https://www.troyhunt.com/how-spoutibles-leaky-api-spurted-out-a-deluge-of-personal-data/">Spoutible</a>.</p>
+</main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/server-side-tokens by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:49 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>

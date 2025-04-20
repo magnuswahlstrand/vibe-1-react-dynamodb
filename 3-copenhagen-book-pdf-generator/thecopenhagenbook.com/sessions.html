@@ -1,0 +1,439 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/sessions by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>Sessions</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="Sessions" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="Sessions" />
+  <meta property="og:url" content="sessions.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="javascript.css" />
+  
+  <link rel="stylesheet" href="json.css" />
+  
+  <link rel="stylesheet" href="main.css" />
+  
+  <link rel="stylesheet" href="markdown.css" />
+  
+  <link rel="stylesheet" href="typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="sessions.html" class="current-nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="random-values.html" class="nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="oauth.html" class="nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="sessions.html" class="current-nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="random-values.html" class="nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="oauth.html" class="nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="sessions">Sessions</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#session-lifetime">Session lifetime</a>
+<ul>
+<li><a href="#sudo-mode">Sudo mode</a></li>
+</ul>
+</li>
+<li><a href="#session-hijacking">Session hijacking</a></li>
+<li><a href="#session-invalidation">Session invalidation</a></li>
+<li><a href="#client-storage">Client storage</a>
+<ul>
+<li><a href="#cookies">Cookies</a></li>
+<li><a href="#web-storage-api">Web Storage API</a></li>
+</ul>
+</li>
+<li><a href="#session-fixation-attacks">Session fixation attacks</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>Throughout a user's visit to your website, they will make multiple requests to your server. If you need to persist state, such as user preference, across those requests, HTTP doesn't provide a mechanism for it. It's a stateless protocol.</p>
+<p>Sessions are a way to persist state in the server. It is especially useful for managing the authentication state, such as the client's identity. We can assign each session with a unique ID and store it on the server to use it as a token. Then the client can associate the request with a session by sending the session ID with it. To implement authentication, we can simply store user data alongside the session.</p>
+<p>It's important that the session ID is sufficiently long and random, or else someone could impersonate other users by just guessing their session IDs. See the <a href="server-side-tokens.html">Server-side tokens</a> guide for generating secure session IDs. Session IDs can be hashed before storage to provide an extra level of security.</p>
+<p>Depending on your application, you may only have to manage sessions for authenticated users, or for both authenticated and unauthenticated users. You can even manage 2 different kinds of sessions - one for auth and another for non-auth related state.</p>
+<h2 id="session-lifetime">Session lifetime</h2>
+<p>If you only manage sessions for authenticated users, a new session is created whenever a user signs in. If you plan to manage session for non-authenticated users as well, sessions should be automatically created when an incoming request doesn't include a valid session. Make sure you don't make your application vulnerable to <a href="#session-fixation-attacks">session fixation attacks</a>.</p>
+<p>For security-critical applications, it is crucial for sessions to expire automatically. This minimizes the time an attacker has to hijack sessions. The expiration should match how long the user is expected to use your application in a single sitting.</p>
+<p>However, for less critical websites, such as a social media app, it would be annoying for users if they had to sign in every single day. A good practice here is to set the expiration to a reasonable time, like 30 days, but extend the expiration whenever the session is used. For example, sessions may expire in 30 days by default, but the expiration gets pushed back 30 days when it's used within 15 days before expiration. This effectively invalidates sessions for inactive users, while keeping active users signed in.</p>
+<p>You can also combine both approaches. For example, you can set the expiration to an hour and extend it every 30 minutes but set an absolute expiration of 12 hours so sessions won't last for longer than that.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kd">const</span> <span class="nx">sessionExpiresIn</span> <span class="p">=</span> <span class="mi">30</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Hour</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">validateSession</span><span class="p">(</span><span class="nx">sessionId</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">Session</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">session</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nf">getSessionFromStorage</span><span class="p">(</span><span class="nx">sessionId</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;invalid session id&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">After</span><span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">ExpiresAt</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;expired session&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">After</span><span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">expiresAt</span><span class="p">.</span><span class="nf">Sub</span><span class="p">(</span><span class="nx">sessionExpiresIn</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">session</span><span class="p">.</span><span class="nx">ExpiresAt</span> <span class="p">=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">Add</span><span class="p">(</span><span class="nx">sessionExpiresIn</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nf">updateSessionExpiration</span><span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">Id</span><span class="p">,</span> <span class="nx">session</span><span class="p">.</span><span class="nx">ExpiresAt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">session</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><h3 id="sudo-mode">Sudo mode</h3>
+<p>An alternative to short-lived sessions is to implement long-lived sessions coupled with sudo mode. Sudo mode allows authenticated users to access security-critical components for a limited time by re-authenticating with one of their credentials (passwords, WebAuthn credentials, TOTP, etc). A simple way to implement this is by keeping track of when the user last used their credentials in each session. This approach provides the security benefits of short-lived sessions without annoying frequent users. This can also help against <a href="#session-hijacking">session hijacking</a>.</p>
+<h2 id="session-hijacking">Session hijacking</h2>
+<p>Session hijacking is another word for stealing sessions. Common attacks include XSS, man-in-the-middle (MITM), and session sniffing. MITM attacks are especially hard to mitigate since it's ultimately up to the users to protect their device and network. Still, there are some ways to protect your users.</p>
+<p>First, consider tracking the user agent (device) and IP address linked to the session to detect suspicious requests. IP addresses can be dynamic for mobile users so you may want to keep track of the general area (country) instead of the specific address. Limiting the number of sessions connected to a user based on these information is also a good safeguard.</p>
+<p>Since IP addresses and request headers can be easily spoofed, however, implementing <a href="#sudo-mode">sudo mode</a> is recommended for any security-critical applications.</p>
+<h2 id="session-invalidation">Session invalidation</h2>
+<p>Sessions can be invalidated by deleting it from both server and client storage.</p>
+<p>When the user signs out, invalidate the current session, or for security-critical applications, invalidate all sessions belonging to that user.</p>
+<p>All sessions of the user should also be invalidated when they gain new permissions (email verification, new role, etc) or change passwords.</p>
+<h2 id="client-storage">Client storage</h2>
+<p>The client should store the session ID in the user's device to be used for subsequent requests. The browser mainly provides 2 ways to store data - cookies and the Web Storage API. Cookies should be preferred for websites as they're automatically included in requests by the browser.</p>
+<h3 id="cookies">Cookies</h3>
+<p>Session cookies should have the following attributes:</p>
+<ul>
+<li><code>HttpOnly</code>: Cookies are only accessible server-side</li>
+<li><code>SameSite=Lax</code>: Use <code>Strict</code> for critical websites</li>
+<li><code>Secure</code>: Cookies can only be sent over HTTPS</li>
+<li><code>Max-Age</code> or <code>Expires</code>: Must be defined to persist cookies</li>
+<li><code>Path=/</code>: Cookies can be accessed from all routes</li>
+</ul>
+<p><a href="csrf.html">CSRF protection</a> must be implemented when using cookies, and using the <code>SameSite</code> flag is not sufficient. Using cookies does not automatically protect your users from cross-site scripting attacks (XSS) as well. While the session ID can't be read directly, authenticated requests can still be made as browsers automatically include cookies in requests.</p>
+<p>The maximum expiration for a cookie is 400 days. If you plan for the session to be long-lived, continuously set the cookie.</p>
+<p><code>Lax</code> should be preferred over <code>Strict</code> for the <code>SameSite</code> attribute as using <code>Strict</code> will cause the browser to not send the session cookie when the user visits your application via an external link.</p>
+<h3 id="web-storage-api">Web Storage API</h3>
+<p>Another option is to store session IDs inside <code>localStorage</code> or <code>sessionStorage</code>. If your website has an XSS vulnerability, this will allow attackers to directly read and steal the user's session ID. It is especially vulnerable to supply chain attacks since tokens can be stolen by just reading the entire local storage, without using any application-specific exploits.</p>
+<p>Session tokens can be sent with the request using the <code>Authorization</code> header for example. Do not send them inside URLs as query parameters or inside form data, nor should tokens sent in this manner be accepted.</p>
+<h2 id="session-fixation-attacks">Session fixation attacks</h2>
+<p>Applications that maintain sessions for both authenticated and unauthenticated users and reuse the current session when a user signs in are vulnerable to session fixation attacks.</p>
+<p>Say an application allows the session ID to be sent inside the URL as a query parameter. If an attacker shares a link to the sign-in page with a session ID already included and the user signs in, the attacker now has a valid session ID to impersonate that user. A similar attack can be done if the application accepts session IDs in forms or cookies, though the latter requires an XSS vulnerability to exploit.</p>
+<p>This can be avoided by always creating a new session when the user signs in and only accepting session IDs via cookies and request headers.</p>
+</main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/sessions by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:49 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>

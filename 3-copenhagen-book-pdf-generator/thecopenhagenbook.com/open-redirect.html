@@ -1,0 +1,370 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/open-redirect by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>Open redirect</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="Open redirect" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="Open redirect" />
+  <meta property="og:url" content="open-redirect.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="javascript.css" />
+  
+  <link rel="stylesheet" href="json.css" />
+  
+  <link rel="stylesheet" href="main.css" />
+  
+  <link rel="stylesheet" href="markdown.css" />
+  
+  <link rel="stylesheet" href="typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="sessions.html" class="nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="random-values.html" class="nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="oauth.html" class="nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="open-redirect.html" class="current-nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="sessions.html" class="nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="random-values.html" class="nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="oauth.html" class="nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="open-redirect.html" class="current-nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="open-redirect">Open redirect</h1>
+<p>Open redirect is a vulnerability where your application allows a user to control a redirect.</p>
+<p>For example, you may want to redirect the user back to their original page after they sign in. To achieve this, you add a <code>redirect_to</code> URL query parameter to the login page and form. When a user signs in, the user is redirected to the location defined in <code>redirect_to</code>.</p>
+<pre class="codeblock"><code>https://example.com/login?redirect_to=%2Fhome
+</code></pre><p>But what if you accept any redirect location without validating it?</p>
+<pre class="codeblock"><code>https://example.com/login?redirect_to=https%3A%2F%2Fscam.com
+</code></pre><p>This may seem harmless at first, but it makes it significantly easier to scam users. The user could be redirected to an identical site made by an attacker and be prompted to enter their password again.</p>
+</main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/open-redirect by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>

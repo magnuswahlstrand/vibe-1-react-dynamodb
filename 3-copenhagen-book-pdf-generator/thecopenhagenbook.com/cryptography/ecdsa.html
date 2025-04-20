@@ -1,0 +1,405 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/cryptography/ecdsa by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>Elliptic curve digital signature algorithm (ECDSA)</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="Elliptic curve digital signature algorithm (ECDSA)" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="Elliptic curve digital signature algorithm (ECDSA)" />
+  <meta property="og:url" content="ecdsa.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="../javascript.css" />
+  
+  <link rel="stylesheet" href="../json.css" />
+  
+  <link rel="stylesheet" href="../main.css" />
+  
+  <link rel="stylesheet" href="../markdown.css" />
+  
+  <link rel="stylesheet" href="../typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="../index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../sessions.html" class="nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../random-values.html" class="nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../oauth.html" class="nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="../open-redirect.html" class="nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="ecdsa.html" class="current-nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="../index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../sessions.html" class="nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../random-values.html" class="nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../oauth.html" class="nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="../open-redirect.html" class="nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="ecdsa.html" class="current-nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="elliptic-curve-digital-signature-algorithm-ecdsa">Elliptic curve digital signature algorithm (ECDSA)</h1>
+<p>ECDSA is a digital signature algorithm using elliptic-curve cryptography. A private key is used to sign a message and a public key is used verify the signature.</p>
+<p>The message is hashed with algorithms like SHA-256 before signing.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/ecdsa&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/sha256&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">msg</span> <span class="o">:=</span> <span class="s">&#34;Hello world!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">hash</span> <span class="o">:=</span> <span class="nx">sha256</span><span class="p">.</span><span class="nf">Sum256</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">msg</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nx">signature</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ecdsa</span><span class="p">.</span><span class="nf">SignASN1</span><span class="p">(</span><span class="nx">rand</span><span class="p">.</span><span class="nx">Reader</span><span class="p">,</span> <span class="nx">privateKey</span><span class="p">,</span> <span class="nx">hash</span><span class="p">[:])</span>
+</span></span></code class=%s></pre><h2 id="signatures">Signatures</h2>
+<p>ECDSA signatures are represented using a pair of positive integers, (r, s).</p>
+<h3 id="ieee-p1363">IEEE P1363</h3>
+<p>In the IEEE P1363 format, the signature is the concatenation of r and s. The values are encoded as big-endian bytes with a size equivalent to the curve size. For example, P-256 is 256 bits or 32 bytes in size.</p>
+<pre class="codeblock"><code class="ts"><span class="line"><span class="cl"><span class="nx">r</span> <span class="o">||</span> <span class="nx">s</span><span class="p">;</span>
+</span></span></code class=%s></pre><h3 id="pkix">PKIX</h3>
+<p>In <a href="https://datatracker.ietf.org/doc/html/rfc5480">RFC 5480</a> by the PKIX working group, the signature is ASN.1 DER encoded sequence of r and s.</p>
+<pre class="codeblock"><code>SEQUENCE {
+    r     INTEGER,
+    s     INTEGER
+}
+</code></pre><h2 id="public-keys">Public keys</h2>
+<p>ECDSA public keys are represented as a pair of positive integers, (x, y).</p>
+<h3 id="sec1">SEC1</h3>
+<p>In <a href="https://www.secg.org/sec1-v2.pdf">SEC 1</a>, public keys can either be encoded in an uncompressed or compressed form. Uncompressed keys are the concatenation of x and y, with a leading <code>0x04</code> byte. The values are encoded as big-endian bytes with a size equivalent to the curve size. For example, P-256 is 256 bits or 32 bytes in size.</p>
+<pre class="codeblock"><code>0x04 || x || y
+</code></pre><p>Compressed keys are the x value with a leading <code>0x02</code> byte if x is even or <code>0x03</code> byte if x is odd. The y value can be derived from x and the curve.</p>
+<pre class="codeblock"><code>0x02 || x
+0x03 || x
+</code></pre><h3 id="pkix-1">PKIX</h3>
+<p>In <a href="https://datatracker.ietf.org/doc/html/rfc5480">RFC 5480</a> by the PKIX working group, the public key is represented as a <code>SubjectPublicKeyInfo</code> ASN.1 sequence. The <code>subjectPublicKey</code> is either the compressed or uncompressed SEC1 public key.</p>
+<pre class="codeblock"><code>SubjectPublicKeyInfo := SEQUENCE {
+    algorithm           AlgorithmIdentifier,
+    subjectPublicKey    BIT STRING
+}
+</code></pre><p>The <code>AlgorithmIdentifier</code> for ECDSA is an ASN.1 sequence with the ECDSA object identifier (<code>1.2.840.10045.2.1</code>) and the curve (e.g. <code>1.2.840.10045.3.1.7</code> for P-256 curve)</p>
+<pre class="codeblock"><code>AlgorithmIdentifier := SEQUENCE {
+    algorithm   OBJECT IDENTIFIER
+    namedCurve  OBJECT IDENTIFIER
+}
+</code></pre></main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/cryptography/ecdsa by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>

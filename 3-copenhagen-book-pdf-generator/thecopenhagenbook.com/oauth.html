@@ -1,0 +1,485 @@
+<html lang="en">
+
+
+<!-- Mirrored from thecopenhagenbook.com/oauth by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content="custom" />
+  <title>OAuth</title>
+  <meta name="description" content="A basic guideline on implementing auth for the web." />
+
+  <meta name="twitter:card" content="summary" />
+  
+  <meta name="twitter:site" content="@pilcrowonpaper" />
+  
+  <meta name="twitter:title" content="OAuth" />
+  <meta name="twitter:description" content="A basic guideline on implementing auth for the web." />
+
+  <meta property="og:site_name" content="The Copenhagen Book" />
+  <meta property="og:title" content="OAuth" />
+  <meta property="og:url" content="oauth.html" />
+  <meta property="og:description" content="A basic guideline on implementing auth for the web." />
+  
+
+  
+
+  
+  <link rel="stylesheet" href="javascript.css" />
+  
+  <link rel="stylesheet" href="json.css" />
+  
+  <link rel="stylesheet" href="main.css" />
+  
+  <link rel="stylesheet" href="markdown.css" />
+  
+  <link rel="stylesheet" href="typescript.css" />
+  
+</head>
+
+<body>
+  <div id="mobile-top">
+    <div id="mobile-top-container">
+      <header id="mobile-header">
+        
+        <a href="index.html" id="mobile-header-title">The Copenhagen Book</a>
+        
+        <button id="toggle-mobile-menu-button" class="h-8 w-8 rounded p-2 lg:hidden" aria-label="Toggle menu">
+          <svg id="toggle-mobile-menu-button-menu-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 17 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"></path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+          <svg id="toggle-mobile-menu-button-close-icon" class="hidden" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6">
+            </path>
+            <style type="text/css">
+              path {
+                stroke: #2c2c2c;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                path {
+                  stroke: rgb(191, 191, 191);
+                }
+              }
+            </style>
+          </svg>
+        </button>
+      </header>
+      <nav id="mobile-menu-nav" class="hidden">
+        
+        <section>
+          <h2 class="nav-section-title">Guides</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="sessions.html" class="nav-section-link">Sessions</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="email-verification.html" class="nav-section-link">Email verification</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="password-reset.html" class="nav-section-link">Password reset</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="random-values.html" class="nav-section-link">Generating random values</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="oauth.html" class="current-nav-section-link">OAuth</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Cryptography</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+        <section>
+          <h2 class="nav-section-title">Links</h2>
+          <ul class="nav-section-links-list">
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+              
+            </li>
+            
+            <li class="nav-section-links-list-item">
+              
+              <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+              
+            </li>
+            
+          </ul>
+        </section>
+        
+      </nav>
+    </div>
+  </div>
+  <div id="content">
+    <div id="content-container">
+      <aside id="sidebar">
+        
+        <a href="index.html" id="sidebar-title">The Copenhagen Book</a>
+        
+        <nav id="sidebar-nav">
+          
+          <section>
+            <h2 class="nav-section-title">Guides</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="server-side-tokens.html" class="nav-section-link">Server-side tokens</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="sessions.html" class="nav-section-link">Sessions</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-authentication.html" class="nav-section-link">Password authentication</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="email-verification.html" class="nav-section-link">Email verification</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="password-reset.html" class="nav-section-link">Password reset</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="random-values.html" class="nav-section-link">Generating random values</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="oauth.html" class="current-nav-section-link">OAuth</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="mfa.html" class="nav-section-link">Multi-factor authentication (MFA)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="webauthn.html" class="nav-section-link">WebAuthn</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="csrf.html" class="nav-section-link">Cross-site request forgery (CSRF)</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="open-redirect.html" class="nav-section-link">Open redirect</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Cryptography</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="cryptography/ecdsa.html" class="nav-section-link">ECDSA</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+          <section>
+            <h2 class="nav-section-title">Links</h2>
+            <ul class="nav-section-links-list">
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/pilcrowonpaper/copenhagen" class="nav-section-link">GitHub repository</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://twitter.com/pilcrowonpaper" class="nav-section-link">Twitter</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://cheatsheetseries.owasp.org/" class="nav-section-link">OWASP Cheat Sheet Series</a>
+                
+              </li>
+              
+              <li class="nav-section-links-list-item">
+                
+                <a href="https://github.com/sponsors/pilcrowOnPaper" class="nav-section-link">Donate</a>
+                
+              </li>
+              
+            </ul>
+          </section>
+          
+        </nav>
+      </aside>
+      <main><h1 id="oauth">OAuth</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#create-authorization-url">Create authorization URL</a></li>
+<li><a href="#validate-authorization-code">Validate authorization code</a></li>
+<li><a href="#proof-key-for-code-exchange-pkce-flow">Proof key for code exchange (PKCE)</a></li>
+<li><a href="#openid-connect-oidc">OpenID Connect (OIDC)</a>
+<ul>
+<li><a href="#openid-connect-discovery">OpenID Connect Discovery</a></li>
+</ul>
+</li>
+<li><a href="#account-linking">Account linking</a></li>
+<li><a href="#other-considerations">Other considerations</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>OAuth is a widely used protocol for authorization. It's what's behind &quot;Sign in with Google&quot; and &quot;Sign in with GitHub.&quot; It allows users to grant access to their resources on an external service, like Google, to your application without sharing their credentials. Instead of implementing a password-based auth, we can replace it with OAuth to let a third-party service handle authentication. You can then get the user's profile and use that to create users and sessions.</p>
+<p>In a basic OAuth flow, the user is redirected to a third-party service, the service authenticates the user, and the user is redirected back to your application. An access token for the user is made available which allows you to request resources on behalf of the user.</p>
+<p>It requires 2 server endpoints in your application:</p>
+<ol>
+<li>Login endpoint (GET): Redirects the user to the OAuth provider.</li>
+<li>Callback endpoint (GET): Handles the redirect from the OAuth provider.</li>
+</ol>
+<p>There are multiple versions of OAuth, with OAuth 2.0 being the latest one. This page will only cover OAuth 2.0, specifically the authorization code grant type, as standardized in <a href="https://datatracker.ietf.org/doc/html/rfc6749">RFC 6749</a>. The implicit grant type is deprecated and should not be used.</p>
+<h2 id="create-authorization-url">Create authorization URL</h2>
+<p>Using GitHub as an example, the first step is to create a GET endpoint (login endpoint) that redirects the user to GitHub. The redirect location is the authorization URL with a few parameters.</p>
+<pre class="codeblock"><code>https://github.com/login/oauth/authorize?
+response_type=code
+&amp;client_id=&lt;CLIENT_ID&gt;
+&amp;redirect_uri=&lt;CALLBACK_ENDPOINT&gt;
+&amp;state=&lt;STATE&gt;
+</code></pre><p>The state is used to ensure the user initiating the process and the one we redirected back to (in the next section) are the same user. As such, a new state must be generated on each request. While it is not strictly required by the spec, it is highly recommended and may be required depending on the provider. It should be generated using a cryptographically secure random generator and have at least 112 bits of entropy. The state can also be used to pass data from the login endpoint to the callback endpoint, though a cookie can just be used instead.</p>
+<p>Your server must keep track of the state associated with each attempt. One simple approach is to store it as a cookie with <code>HttpOnly</code>, <code>SameSite=Lax</code>, <code>Secure</code>, and <code>Path=/</code> attributes. You may also assign the state to the current session.</p>
+<p>You can define a <code>scope</code> parameter to request access to additional resources. If you have multiple scopes, they should be separated by spaces.</p>
+<pre class="codeblock"><code>&amp;scope=email%20identity
+</code></pre><p>You can create a &quot;Sign in&quot; button by adding a link to the login endpoint.</p>
+<pre class="codeblock"><code class="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/login/github&#34;</span><span class="p">&gt;</span>Sign in with GitHub<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span></code class=%s></pre><h2 id="validate-authorization-code">Validate authorization code</h2>
+<p>The user will be redirected to the callback endpoint (as defined in <code>redirect_uri</code>) with a single-use authorization code, which is included as a query parameter. This code is then exchanged for an access token.</p>
+<pre class="codeblock"><code>https://example.com/login/github/callback?code=&lt;CODE&gt;&amp;state=&lt;STATE&gt;
+</code></pre><p>If you add a state to the authorization URL, the redirect request will include a <code>state</code> parameter. It is critical to check that it matches the state associated with the attempt. Return an error if the state is missing or if they don't match. A common mistake is forgetting to check whether the <code>state</code> parameter exists in the URL.</p>
+<p>The code is sent to the OAuth provider's token endpoint via an <code>application/x-www-form-urlencoded</code> POST request.</p>
+<pre class="codeblock"><code>POST https://github.com/login/oauth/access_token
+Accept: application/json
+Authorization: Basic &lt;CREDENTIALS&gt;
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&amp;client_id=&lt;CLIENT_ID&gt;
+&amp;redirect_uri=&lt;CALLBACK_ENDPOINT&gt;
+&amp;code=&lt;CODE&gt;
+</code></pre><p>If your OAuth provider uses a client secret, it should be base64 encoded with the client ID and secret included in the Authorization header (HTTP basic authorization scheme).</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">clientId</span><span class="p">,</span> <span class="nx">clientSecret</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="nx">credentials</span> <span class="o">:=</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">StdEncoding</span><span class="p">.</span><span class="nf">EncodeToString</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">clientId</span> <span class="o">+</span> <span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="nx">clientSecret</span><span class="p">))</span>
+</span></span></code class=%s></pre><p>Some providers also allow the client secret to be included in the body.</p>
+<pre class="codeblock"><code>POST https://github.com/login/oauth/access_token
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&amp;client_id=&lt;CLIENT_ID&gt;
+&amp;client_secret=&lt;CLIENT_SECRET&gt;
+&amp;redirect_uri=&lt;CALLBACK_ENDPOINT&gt;
+&amp;code=&lt;CODE&gt;
+</code></pre><p>The request will return an access token, which can then be used to get the user's identity. It may also include other fields such as <code>refresh_token</code> and <code>expires_in</code>.</p>
+<pre class="codeblock"><code>{ &#34;access_token&#34;: &#34;&lt;ACCESS_TOKEN&gt;&#34; }
+</code></pre><p>For example, using the access token, you can get their GitHub profile and store their GitHub user ID, which will allow you to get their registered account when they sign in again. Be aware that the email address provided by the OAuth provider may not be verified. You may need to manually verify user emails or block users without a verified email.</p>
+<p>The access token itself should never be used as a replacement for sessions.</p>
+<h2 id="proof-key-for-code-exchange-pkce-flow">Proof key for code exchange (PKCE) flow</h2>
+<p>PKCE was introduced in <a href="https://datatracker.ietf.org/doc/html/rfc7636">RFC 7636</a> to provide additional protection for OAuth 2.0. We recommend using it in addition to state and a client secret if your OAuth provider supports it. Be aware that some OAuth providers do not require a client secret when PKCE is enabled, in which case PKCE should not be used.</p>
+<p>PKCE can replace state entirely, as both protect against CSRF attacks, but it may be required by your OAuth provider.</p>
+<p>A new code verifier must be generated on each request. It should be generated using a cryptographically secure random generator and have at least 112 bits of entropy (256 bits recommended by the RFC). Similar to state, your application must keep track of the code verifier associated with each attempt (using cookies or sessions). A base64url (no padding) encoded SHA256 hash of it called a code challenge is included in the authorization URL.</p>
+<pre class="codeblock"><code class="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">codeVerifier</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="nx">codeChallengeBuf</span> <span class="o">:=</span> <span class="nx">sha256</span><span class="p">.</span><span class="nf">Sum256</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">codeVerifier</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nx">codeChallenge</span> <span class="o">:=</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">URLEncoding</span><span class="p">.</span><span class="nf">WithPadding</span><span class="p">(</span><span class="nx">base64</span><span class="p">.</span><span class="nx">NoPadding</span><span class="p">).</span><span class="nf">EncodeToString</span><span class="p">(</span><span class="nx">codeChallengeBuf</span><span class="p">)</span>
+</span></span></code class=%s></pre><pre class="codeblock"><code>https://accounts.google.com/o/oauth2/v2/auth?
+response_type=code
+&amp;client_id=&lt;...&gt;
+&amp;redirect_uri=&lt;...&gt;
+&amp;state=&lt;...&gt;
+&amp;code_challenge_method=S256
+&amp;code_challenge=&lt;CODE_CHALLENGE&gt;
+</code></pre><p>In the callback endpoint, the code verifier of the current attempt should be sent alongside the authorization code.</p>
+<pre class="codeblock"><code>POST https://oauth2.googleapis.com/token
+Accept: application/json
+Authorization: Basic &lt;CREDENTIALS&gt;
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&amp;client_id=&lt;...&gt;
+&amp;redirect_uri=&lt;...&gt;
+&amp;code=&lt;...&gt;
+&amp;code_verifier=&lt;CODE_VERIFIER&gt;
+</code></pre><h2 id="openid-connect-oidc">OpenID Connect (OIDC)</h2>
+<p><a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect</a> is a widely used protocol built on top of OAuth 2.0. An important addition to OAuth is that the identity provider returns an ID token alongside the access token. An ID token is a <a href="https://datatracker.ietf.org/doc/html/rfc7519">JSON Web Token</a> that includes user data. It will always include a unique identifier for the user in the <code>sub</code> field.</p>
+<pre class="codeblock"><code>{
+	&#34;access_token&#34;: &#34;&lt;ACCESS_TOKEN&gt;&#34;,
+	&#34;id_token&#34;: &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaXNzIjoiZXhhbXBsZS5jb20ifQ.uMMQPfp7LwcLiBbfZdoHdIPjKgS2HUfOr5vlY71el8A&#34;
+}
+</code></pre><p>While you can validate the token with a public key, this is not strictly necessary for server-side applications if you're using HTTPS for communications.</p>
+<h3 id="openid-connect-discovery">OpenID Connect Discovery</h3>
+<p>OpenID Connect defines a <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">discovery mechanism</a> that allows clients to dynamically fetch the OpenID Provider's configuration, including the OAuth 2.0 endpoint locations. This eliminates the need to hard-code endpoint URLs in your application. To use OpenID Connect Discovery, your OpenID Provider must have a discovery endpoint available.</p>
+<p>The discovery endpoint is a well-known URL that returns a JSON document containing the OpenID Provider's configuration information. Note that not all OAuth providers support OpenID Connect Discovery. Check your provider's documentation to determine if they offer a discovery endpoint. If not, you may still need to manually configure the endpoint URLs in your application.</p>
+<p>The well-known URL has the path <code>/.well-known/openid-configuration</code>. For example, Google's Discovery Endpoint looks like this:</p>
+<pre class="codeblock"><code>https://accounts.google.com/.well-known/openid-configuration
+</code></pre><p>The endpoint will return a JSON object containing the OpenID Provider's configuration, including the endpoint URLs for authorization, token exchange, and user info retrieval.</p>
+<pre class="codeblock"><code class="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;issuer&#34;</span><span class="p">:</span> <span class="s2">&#34;https://example.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;authorization_endpoint&#34;</span><span class="p">:</span> <span class="s2">&#34;https://example.com/oauth2/authorize&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;token_endpoint&#34;</span><span class="p">:</span> <span class="s2">&#34;https://example.com/oauth2/token&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;userinfo_endpoint&#34;</span><span class="p">:</span> <span class="s2">&#34;https://example.com/oauth2/userinfo&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;code_challenge_methods_supported&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;S256&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;grant_types_supported&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;authorization_code&#34;</span><span class="p">,</span> <span class="s2">&#34;refresh_token&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;scopes_supported&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;openid&#34;</span><span class="p">,</span> <span class="s2">&#34;email&#34;</span><span class="p">,</span> <span class="s2">&#34;profile&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code class=%s></pre><p>With OpenID Connect Discovery, your application can dynamically adapt to changes in the OpenID Provider's configuration without requiring code updates. This ensures that your application always uses the most up-to-date endpoint URLs. The drawback is that you will have to make extra fetch requests.</p>
+<h2 id="account-linking">Account linking</h2>
+<p>Account linking allows users to sign in with any of their social accounts and be authenticated as the same user on your application. It is usually done by checking the email address registered with the provider. If you're using email to link accounts, make sure to validate the user's email. Most providers provide a <code>is_verified</code> field or similar in user profiles. Do not assume that the email has been verified unless the provider explicitly mentions it in their documentation. Users without a verified email should be prevented from completing the authentication process and prompted to verify their email first.</p>
+<h2 id="other-considerations">Other considerations</h2>
+<ul>
+<li><a href="open-redirect.html">Open redirect</a>.</li>
+</ul>
+</main>
+    </div>
+  </div>
+</body>
+
+
+<!-- Mirrored from thecopenhagenbook.com/oauth by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Apr 2025 12:02:51 GMT -->
+</html>
+
+<script>
+  document
+    .getElementById("toggle-mobile-menu-button")
+    .addEventListener("click", (e) => {
+      const mobileMenuNav = document.getElementById("mobile-menu-nav");
+      if (mobileMenuNav.classList.contains("hidden")) {
+        mobileMenuNav.classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.remove("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.add("hidden");
+      } else {
+        mobileMenuNav.classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-close-icon")
+          .classList.add("hidden");
+        document
+          .getElementById("toggle-mobile-menu-button-menu-icon")
+          .classList.remove("hidden");
+      }
+    });
+</script>
