@@ -48,6 +48,15 @@ export default function TypingGame() {
         if (typedLetters.length + 1 === currentWord.length) {
           correctSound.play();
           setShowConfetti(true);
+          
+          // Speak the completed word
+          const synth = window.speechSynthesis;
+          const utterance = new SpeechSynthesisUtterance(currentWord);
+          utterance.lang = 'sv-SE';
+          setTimeout(() => {
+            synth.speak(utterance);
+          }, 600);
+
           setTimeout(() => {
             setShowConfetti(false);
             if (currentWordIndex + 1 === words.length) {

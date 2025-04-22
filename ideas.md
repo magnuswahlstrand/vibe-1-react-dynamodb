@@ -10,6 +10,6 @@
 
 ## Ideas
 
-* [-] ~Script to generate PDF or MOBI from website~
+* [-] ~~Script to generate PDF or MOBI from website~
 * [ ] CLI to generate instructions for vibe-projects (this repo)
 * [x] Generate audio files from AWS Polly
