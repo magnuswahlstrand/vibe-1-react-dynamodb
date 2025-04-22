@@ -9,8 +9,11 @@ def load_letters():
     letters = {}
     with open('letters/swedish_letters.txt', 'r') as f:
         for line in f:
-            letter, ipa = line.strip().split(':')
-            letters[letter.upper()] = ipa  # Convert to uppercase for output files
+            letter, ipa, voice = line.strip().split('|')
+            letters[letter.upper()] = {
+                'ipa': ipa,
+                'voice': voice
+            }
     return letters
 
 def generate_ssml(letter, ipa):
@@ -31,16 +34,19 @@ def main():
     session = boto3.Session(profile_name=AWS_PROFILE)
     polly = session.client('polly', region_name=AWS_REGION)
     
-    for letter, ipa in letters.items():
-        ssml = generate_ssml(letter, ipa)
+    for letter, data in letters.items():
+        ssml = generate_ssml(letter, data['ipa'])
         print(ssml.strip())
+        
+        voice_id = 'Elin' if data['voice'] == 'elin' else 'Astrid'
+        engine = 'neural' if data['voice'] == 'elin' else 'standard'
         
         response = polly.synthesize_speech(
             Text=ssml,
             TextType='ssml',
-            VoiceId=VOICE_ID,
+            VoiceId=voice_id,
             OutputFormat=OUTPUT_FORMAT,
-            Engine=ENGINE
+            Engine=engine
         )
         
         output_file = f'output/audio/{letter}.mp3'
