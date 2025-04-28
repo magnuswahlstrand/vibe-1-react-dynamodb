@@ -1,47 +1,54 @@
-export interface GameItem {
+export type GameItem = {
   id: string;
   title: string;
-  description: string;
   imageUrl: string;
-}
+};
 
 export const GAME_ITEMS: Record<string, GameItem> = {
-  'small': {
-    id: 'small',
-    title: 'Small Cat',
-    description: 'A tiny kitten',
-    imageUrl: 'https://picsum.photos/id/237/200/300',
+  'number_1': {
+    id: 'number_1',
+    title: 'Giraffe',
+    imageUrl: '/images/giraffe.png'
   },
-  'medium': {
-    id: 'medium',
-    title: 'Medium Cat',
-    description: 'A growing kitten',
-    imageUrl: 'https://picsum.photos/id/238/200/300',
+  'number_2': {
+    id: 'number_2',
+    title: 'Horse',
+    imageUrl: '/images/horse.png'
   },
-  'large': {
-    id: 'large',
-    title: 'Large Cat',
-    description: 'A full-grown cat',
-    imageUrl: 'https://picsum.photos/id/239/200/300',
+  'number_3': {
+    id: 'number_3',
+    title: 'Dog',
+    imageUrl: '/images/dog.png'
+  },
+  'number_4': {
+    id: 'number_4',
+    title: 'Cat',
+    imageUrl: '/images/cat.png'
+  },
+  'number_5': {
+    id: 'number_5',
+    title: 'Ant',
+    imageUrl: '/images/ant.png'
   }
 };
 
-// Maps QR codes to item IDs
+export const CORRECT_ORDER = [
+  'number_1',
+  'number_2',
+  'number_3',
+  'number_4',
+  'number_5'
+];
+
 export const QR_CODE_MAPPINGS: Record<string, string> = {
-  'y': 'small',
-  'u': 'medium',
-  'i': 'large'
+  'number_1': 'number_1',
+  'number_2': 'number_2',
+  'number_3': 'number_3',
+  'number_4': 'number_4',
+  'number_5': 'number_5'
 };
 
-// Command mappings for the game page
 export const GAME_COMMANDS: Record<string, () => void> = {
-  'r': () => {
-    // Reset game - handled in the component
-  },
-  'm': () => {
-    // Go to menu - handled in the component
-  }
+  'restart': () => {},
+  'down': () => {}
 };
-
-// Defines the correct order of items
-export const CORRECT_ORDER: string[] = ['small', 'medium', 'large'];

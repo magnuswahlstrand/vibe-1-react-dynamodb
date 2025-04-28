@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation';
@@ -8,13 +8,12 @@ import { GameItem, QR_CODE_MAPPINGS, GAME_ITEMS, CORRECT_ORDER, GAME_COMMANDS } 
 import Image from 'next/image';
 import { CheckCircle2, XCircle, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { Input } from "@/components/ui/input"
 
 export default function GamePage() {
   const router = useRouter();
-  const [scannedItems, setScannedItems] = useState<GameItem[]>([
-    GAME_ITEMS['small'],
-    GAME_ITEMS['medium']
-  ]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [scannedItems, setScannedItems] = useState<GameItem[]>([]);
 
   const checkOrder = (items: GameItem[]) => {
     const itemIds = items.map(item => item.id);
@@ -30,38 +29,47 @@ export default function GamePage() {
     });
   };
 
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      const key = e.key.toLowerCase();
+  const handleInput = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const input = inputRef.current?.value.toLowerCase() || '';
+    console.log(`Input received: ${input}`);
+
+    // Check for commands first
+    if (input in GAME_COMMANDS) {
+      console.log(`Command entered: ${input}`);
+      if (input === 'restart') {
+        setScannedItems([]);
+      } else if (input === 'down') {
+        router.push('/');
+      }
+    }
+    // Then check for item scans
+    else if (input in QR_CODE_MAPPINGS) {
+      const itemId = QR_CODE_MAPPINGS[input];
+      const item = GAME_ITEMS[itemId];
+      console.log(`Item scanned: ${item.title} (${input})`);
       
-      // Check for commands first
-      if (key in GAME_COMMANDS) {
-        if (key === 'r') {
-          setScannedItems([]);
-        } else if (key === 'm') {
-          router.push('/');
+      // Only add if not already in the list
+      setScannedItems(prev => {
+        if (prev.some(i => i.id === item.id)) {
+          console.log('Item already scanned');
+          return prev;
         }
-        return;
-      }
+        return [...prev, item];
+      });
+    }
 
-      // Then check for item scans
-      if (key in QR_CODE_MAPPINGS) {
-        const itemId = QR_CODE_MAPPINGS[key];
-        const item = GAME_ITEMS[itemId];
-        
-        // Only add if not already in the list
-        setScannedItems(prev => {
-          if (prev.some(i => i.id === item.id)) {
-            return prev;
-          }
-          return [...prev, item];
-        });
-      }
-    };
+    // Clear input
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [router]);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const isOrderCorrect = checkOrder(scannedItems);
   const allItemsScanned = scannedItems.length === CORRECT_ORDER.length;
@@ -111,6 +119,16 @@ export default function GamePage() {
               </div>
             ))}
           </div>
+
+          <form onSubmit={handleInput} className="mb-8">
+            <Input
+              ref={inputRef}
+              type="text"
+              placeholder="Enter code..."
+              className="text-center"
+              autoComplete="off"
+            />
+          </form>
 
           <div className="flex gap-4">
             <Button 
